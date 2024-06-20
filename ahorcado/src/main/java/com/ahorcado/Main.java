@@ -1,6 +1,6 @@
 package com.ahorcado;
 
-import java.net.Socket;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -11,27 +11,51 @@ public class Main {
     static ArrayList<String> objetos = new ArrayList<>(Arrays.asList("televisor", "celular", "camara", "portatil", "microfono", "cargador", "ventilador"));
 
     public static void main(String[] args) {
+        
         Scanner sc = new Scanner(System.in);
+        Main mn = new Main();
 
         while (true) {
+            String opcionMain;
             mostrarMenu();
-            int opcionMain = sc.nextInt();
-            sc.nextLine();
-
+            opcionMain = mn.leerdato(sc,"Digite una opcion: ");
             switch (opcionMain) {
-                case 1:
+                case "1":
                     System.out.println("\t¡Has ingresado al juego!");
                     jugarAhorcado(sc);
                     break;
-                case 2:
+                case "2":
                     System.out.println("HASTA NUNCA...");
                     sc.close();
                     return;
                 default:
-                    System.out.println("Opción no válida. Por favor, ingresa 1 o 2.");
+                    System.out.println("\t\t\nOpción no válida. Por favor, ingresa 1 o 2.\t\n");
                     continue;
             }
         }
+    }
+
+    private String leerdato(Scanner sc,String msg){
+        String opcionMain = "";
+        try {
+            System.out.print(msg);
+            opcionMain = sc.nextLine();   
+       } catch (Exception e) {
+           System.out.println(e);
+       }
+       
+        return opcionMain;
+    }
+
+    public static void menuSalida(){
+        System.out.println("    )          (                      (                           )   \n" + //
+                        " ( /(   (      )\\ )  *   )    (       )\\ )             (       ( /(   \n" + //
+                        " )\\())  )\\    (()/(` )  /(    )\\     (()/(    (   (    )\\ )    )\\())  \n" + //
+                        "((_)\\((((_)(   /(_))( )(_))((((_)(    /(_))   )\\  )\\  (()/(   ((_)\\   \n" + //
+                        " _((_))\\ _ )\\ (_)) (_(_())  )\\ _ )\\  (_))  _ ((_)((_)  /(_))_   ((_)  \n" + //
+                        "| || |(_)_\\(_)/ __||_   _|  (_)_\\(_) | |  | | | || __|(_)) __| / _ \\  \n" + //
+                        "| __ | / _ \\  \\__ \\  | |     / _ \\   | |__| |_| || _|   | (_ || (_) | \n" + //
+                        "|_||_|/_/ \\_\\ |___/  |_|    /_/ \\_\\  |____|\\___/ |___|   \\___| \\___/ ");
     }
 
     public static void mostrarMenu() {
@@ -52,8 +76,8 @@ public class Main {
                     System.out.println("\t*  1. Jugar                                         *");
                     System.out.println("\t*  2. Salir                                         *");
                     System.out.println("\t*                                                   *");
-                    System.out.println("\t*****************************************************");
-                    System.out.print("\tElige una opción: ");
+                    System.out.println("\t*****************************************************\n");
+                    
     }
 
     public static void jugarAhorcado(Scanner scc) {
@@ -112,13 +136,31 @@ public class Main {
             else {
                 System.out.println("\t¡Has acertado!");
             }
-
+            
             if (palabraConGuiones.indexOf("_") == -1) {
                 System.out.println("\t¡Felicidades! Has adivinado la palabra: " + palabra);
-                return;
+                System.out.println("Quieres jugar de nuevo? elije el numero \n 1. Si \n 2. No");
+                try {
+                    letra  = scc.nextLine().charAt(0);
+                } catch (Exception e) {
+                    System.out.println("Error" + e);
+                    }
+                 
+                if(String.valueOf(letra).equals("1")){
+                    mostrarMenu();
+                    return;
+                }
+                else if(!String.valueOf(letra).equals("1")){
+                    menuSalida();
+                    intentos = 0;
+                    continue;
+                }
             }
         }
 
-        System.out.println("\tHas perdido. La palabra era: " + palabra);
+
+        //System.out.println("\tHas perdido. La palabra era: " + palabra);
     }
+
+
 }
